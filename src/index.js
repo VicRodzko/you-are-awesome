@@ -1,18 +1,45 @@
-// DO WHATEVER YOU WANT HERE
+/* DO WHATEVER YOU WANT HERE */
 
-const createEnumerableProperty = () => {};
-const createNotEnumerableProperty = () => {};
-const createProtoMagicObject = () => {};
-const incrementor = () => {};
-const asyncIncrementor = () => {};
-const createIncrementer = () => {};
+const createEnumerableProperty = prop => prop;
+const createNotEnumerableProperty = prop => prop;   // don't work
+const createProtoMagicObject = () => {
+    let magicObject = () => {};
+    magicObject.prototype = magicObject.__proto__;
+    return magicObject;
+};
 
-// return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => {};
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
+let count = 0;
+const incrementor = () => {
+    count++;
+	return incrementor;
+};
+incrementor.valueOf = () => count;
+
+let countForAsyncIncr = 0;
+const asyncIncrementor = () => {
+    countForAsyncIncr++;
+    return countForAsyncIncr;
+};
+
+const createIncrementer = () => {};                 // don't work
+
+/* Return same argument not earlier than in one second, and not later, than in two */
+
+const returnBackInSecond = back => {
+    let promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(back);
+        }, 1000);
+    });
+    return promise;
+};
+
+const getDeepPropertiesCount = () => {};            // don't work
+
+const createSerializedObject = () => null;
+
+const toBuffer = () => {};                          // don't work
+const sortByProto = () => {};                       // don't work
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
